@@ -9,12 +9,13 @@ xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springf
                     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-		<context:component-scan base-package="com.danbuchner.contactform.controller"/>
-		<context:component-scan base-package="com.danbuchner.contactform.email"/>
-
+		<context:component-scan base-package="com.danbuchner.contactform.*"/>
+		
 		<mvc:annotation-driven />
 		
 		<mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
+		
+		<context:property-placeholder location="classpath:emailService.properties" />
 		
 		 <bean
 			class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -29,10 +30,10 @@ xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springf
 		<bean id="emailService" class="com.danbuchner.contactform.email.EmailServiceImpl"></bean>
 		
 		<bean id="emailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		  <property name="host" value="smtp.gmail.com"/>
-		  <property name="port" value="587" />
-		  <property name="username" value="dan.buchner@gmail.com"/>
-		  <property name="password" value="##############"/>
+		  <property name="host" value="${emailSender.host}"/>
+		  <property name="port" value="${emailSender.host.port}" />
+		  <property name="username" value="${emailSender.host.userName}"/>
+		  <property name="password" value="${emailSender.host.password}"/>
 		  <property name="javaMailProperties">
 	  		 <props>
        	      <prop key="mail.smtp.auth">true</prop>
